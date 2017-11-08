@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StockModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CustLogin">
+    <Key>
+      <PropertyRef Name="CustId" />
+    </Key>
+    <Property Name="CustId" Type="int" Nullable="false" />
+    <Property Name="CustLoginName" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CustPassword" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CustomerInfo">
+    <Key>
+      <PropertyRef Name="CustId" />
+    </Key>
+    <Property Name="CustId" Type="int" Nullable="false" />
+    <Property Name="CustName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CustRoad" Type="nvarchar" MaxLength="70" Nullable="false" />
+    <Property Name="CustCellPhone" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="PostId" Type="int" />
+    <Property Name="PostCategory" Type="int" Nullable="false" />
+    <Property Name="CustLoginName" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CustPassword" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="ProdId" Type="int" Nullable="false" />
+    <Property Name="ProdPrice" Type="int" Nullable="false" />
+    <Property Name="ProdQuantity" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderInfo">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustId" Type="int" Nullable="false" />
+    <Property Name="OrderTotal" Type="int" />
+    <Property Name="OrderTime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PostCInfo">
+    <Key>
+      <PropertyRef Name="PostCategory" />
+    </Key>
+    <Property Name="PostCategory" Type="int" Nullable="false" />
+    <Property Name="CityName" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PostInfo">
+    <Key>
+      <PropertyRef Name="PostId" />
+    </Key>
+    <Property Name="PostId" Type="int" Nullable="false" />
+    <Property Name="PostName" Type="nchar" MaxLength="8" />
+    <Property Name="PostCategory" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProdInfo">
+    <Key>
+      <PropertyRef Name="ProdId" />
+    </Key>
+    <Property Name="ProdId" Type="int" Nullable="false" />
+    <Property Name="ProdName" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="ProdCount" Type="int" Nullable="false" />
+    <Property Name="ProdCategory" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="ProdPrice" Type="int" Nullable="false" />
+    <Property Name="ProdContent" Type="nvarchar(max)" />
+  </EntityType>
+  <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'Stock.dbo.VW_MyOrder' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+  <EntityType Name="VW_MyOrder">
+    <Key>
+      <PropertyRef Name="OrderId" />
+      <PropertyRef Name="CustName" />
+      <PropertyRef Name="CustCellPhone" />
+      <PropertyRef Name="CustId" />
+    </Key>
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="CustId" Type="int" Nullable="false" />
+    <Property Name="CustName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CustCellPhone" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="OrderTotal" Type="int" />
+    <Property Name="OrderTime" Type="datetime" />
+  </EntityType>
+  <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'Stock.dbo.VW_OrderAndDetail' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+  <EntityType Name="VW_OrderAndDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="ProdId" Type="int" Nullable="false" />
+    <Property Name="ProdPrice" Type="int" Nullable="false" />
+    <Property Name="ProdQuantity" Type="int" Nullable="false" />
+    <Property Name="CustId" Type="int" Nullable="false" />
+    <Property Name="OrderTotal" Type="int" />
+    <Property Name="OrderTime" Type="datetime" />
+  </EntityType>
+  <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'Stock.dbo.VW_OrderAndDetailAndCust' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+  <EntityType Name="VW_OrderAndDetailAndCust">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="PostName" Type="nchar" MaxLength="8" />
+    <Property Name="PostCategory" Type="int" Nullable="false" />
+    <Property Name="ProdName" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="OrderTotal" Type="int" />
+    <Property Name="OrderTime" Type="datetime" />
+    <Property Name="ProdPrice" Type="int" Nullable="false" />
+    <Property Name="ProdQuantity" Type="int" Nullable="false" />
+    <Property Name="CustName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CustRoad" Type="nvarchar" MaxLength="70" Nullable="false" />
+    <Property Name="CustCellPhone" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="CustId" Type="int" Nullable="false" />
+    <Property Name="CityName" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_OrderDetail_OrderInfo">
+    <End Role="OrderInfo" Type="Self.OrderInfo" Multiplicity="1" />
+    <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderInfo">
+        <PropertyRef Name="OrderId" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetail_ProdInfo">
+    <End Role="ProdInfo" Type="Self.ProdInfo" Multiplicity="1" />
+    <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProdInfo">
+        <PropertyRef Name="ProdId" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="ProdId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetail_ProdInfo1">
+    <End Role="ProdInfo" Type="Self.ProdInfo" Multiplicity="1" />
+    <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProdInfo">
+        <PropertyRef Name="ProdId" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="ProdId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderInfo_CustomerInfo">
+    <End Role="CustomerInfo" Type="Self.CustomerInfo" Multiplicity="1" />
+    <End Role="OrderInfo" Type="Self.OrderInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerInfo">
+        <PropertyRef Name="CustId" />
+      </Principal>
+      <Dependent Role="OrderInfo">
+        <PropertyRef Name="CustId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PostInfo_PostCInfo">
+    <End Role="PostCInfo" Type="Self.PostCInfo" Multiplicity="1" />
+    <End Role="PostInfo" Type="Self.PostInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PostCInfo">
+        <PropertyRef Name="PostCategory" />
+      </Principal>
+      <Dependent Role="PostInfo">
+        <PropertyRef Name="PostCategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="StockModelStoreContainer">
+    <EntitySet Name="CustLogin" EntityType="Self.CustLogin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CustomerInfo" EntityType="Self.CustomerInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderInfo" EntityType="Self.OrderInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PostCInfo" EntityType="Self.PostCInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PostInfo" EntityType="Self.PostInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProdInfo" EntityType="Self.ProdInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VW_MyOrder" EntityType="Self.VW_MyOrder" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VW_MyOrder].[OrderId] AS [OrderId], 
+    [VW_MyOrder].[CustId] AS [CustId], 
+    [VW_MyOrder].[CustName] AS [CustName], 
+    [VW_MyOrder].[CustCellPhone] AS [CustCellPhone], 
+    [VW_MyOrder].[OrderTotal] AS [OrderTotal], 
+    [VW_MyOrder].[OrderTime] AS [OrderTime]
+    FROM [dbo].[VW_MyOrder] AS [VW_MyOrder]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VW_OrderAndDetail" EntityType="Self.VW_OrderAndDetail" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VW_OrderAndDetail].[ID] AS [ID], 
+    [VW_OrderAndDetail].[OrderId] AS [OrderId], 
+    [VW_OrderAndDetail].[ProdId] AS [ProdId], 
+    [VW_OrderAndDetail].[ProdPrice] AS [ProdPrice], 
+    [VW_OrderAndDetail].[ProdQuantity] AS [ProdQuantity], 
+    [VW_OrderAndDetail].[CustId] AS [CustId], 
+    [VW_OrderAndDetail].[OrderTotal] AS [OrderTotal], 
+    [VW_OrderAndDetail].[OrderTime] AS [OrderTime]
+    FROM [dbo].[VW_OrderAndDetail] AS [VW_OrderAndDetail]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VW_OrderAndDetailAndCust" EntityType="Self.VW_OrderAndDetailAndCust" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VW_OrderAndDetailAndCust].[PostName] AS [PostName], 
+    [VW_OrderAndDetailAndCust].[PostCategory] AS [PostCategory], 
+    [VW_OrderAndDetailAndCust].[ProdName] AS [ProdName], 
+    [VW_OrderAndDetailAndCust].[OrderId] AS [OrderId], 
+    [VW_OrderAndDetailAndCust].[OrderTotal] AS [OrderTotal], 
+    [VW_OrderAndDetailAndCust].[OrderTime] AS [OrderTime], 
+    [VW_OrderAndDetailAndCust].[ProdPrice] AS [ProdPrice], 
+    [VW_OrderAndDetailAndCust].[ProdQuantity] AS [ProdQuantity], 
+    [VW_OrderAndDetailAndCust].[CustName] AS [CustName], 
+    [VW_OrderAndDetailAndCust].[CustRoad] AS [CustRoad], 
+    [VW_OrderAndDetailAndCust].[CustCellPhone] AS [CustCellPhone], 
+    [VW_OrderAndDetailAndCust].[id] AS [id], 
+    [VW_OrderAndDetailAndCust].[CustId] AS [CustId], 
+    [VW_OrderAndDetailAndCust].[CityName] AS [CityName]
+    FROM [dbo].[VW_OrderAndDetailAndCust] AS [VW_OrderAndDetailAndCust]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_OrderDetail_OrderInfo" Association="Self.FK_OrderDetail_OrderInfo">
+      <End Role="OrderInfo" EntitySet="OrderInfo" />
+      <End Role="OrderDetail" EntitySet="OrderDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetail_ProdInfo" Association="Self.FK_OrderDetail_ProdInfo">
+      <End Role="ProdInfo" EntitySet="ProdInfo" />
+      <End Role="OrderDetail" EntitySet="OrderDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetail_ProdInfo1" Association="Self.FK_OrderDetail_ProdInfo1">
+      <End Role="ProdInfo" EntitySet="ProdInfo" />
+      <End Role="OrderDetail" EntitySet="OrderDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderInfo_CustomerInfo" Association="Self.FK_OrderInfo_CustomerInfo">
+      <End Role="CustomerInfo" EntitySet="CustomerInfo" />
+      <End Role="OrderInfo" EntitySet="OrderInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PostInfo_PostCInfo" Association="Self.FK_PostInfo_PostCInfo">
+      <End Role="PostCInfo" EntitySet="PostCInfo" />
+      <End Role="PostInfo" EntitySet="PostInfo" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

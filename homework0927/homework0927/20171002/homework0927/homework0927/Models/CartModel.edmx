@@ -1,0 +1,361 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="StockModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CustLogin">
+          <Key>
+            <PropertyRef Name="CustId" />
+          </Key>
+          <Property Name="CustId" Type="int" Nullable="false" />
+          <Property Name="CustLoginName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="CustPassword" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomerInfo">
+          <Key>
+            <PropertyRef Name="CustId" />
+          </Key>
+          <Property Name="CustId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CustName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustRoad" Type="nvarchar" MaxLength="70" Nullable="false" />
+          <Property Name="CustCellPhone" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="PostId" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="PostCategory" Type="int" Nullable="false" />
+          <Property Name="CustLoginName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="CustPassword" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="ProdId" Type="int" Nullable="false" />
+          <Property Name="ProdPrice" Type="int" Nullable="false" />
+          <Property Name="ProdQuantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderInfo">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="CustId" Type="int" Nullable="false" />
+          <Property Name="OrderTotal" Type="int" />
+          <Property Name="OrderTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PostCInfo">
+          <Key>
+            <PropertyRef Name="PostCategory" />
+          </Key>
+          <Property Name="PostCategory" Type="int" Nullable="false" />
+          <Property Name="CityName" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PostInfo">
+          <Key>
+            <PropertyRef Name="PostId" />
+          </Key>
+          <Property Name="PostId" Type="int" Nullable="false" />
+          <Property Name="PostName" Type="nchar" MaxLength="8" />
+          <Property Name="PostCategory" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProdInfo">
+          <Key>
+            <PropertyRef Name="ProdId" />
+          </Key>
+          <Property Name="ProdId" Type="int" Nullable="false" />
+          <Property Name="ProdName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ProdCount" Type="int" Nullable="false" />
+          <Property Name="ProdCategory" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="ProdPrice" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductCommets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustId" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="ProdId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'Stock.dbo.VW_OrderAndDetail' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="VW_OrderAndDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="ProdId" Type="int" Nullable="false" />
+          <Property Name="ProdPrice" Type="int" Nullable="false" />
+          <Property Name="ProdQuantity" Type="int" Nullable="false" />
+          <Property Name="CustId" Type="int" Nullable="false" />
+          <Property Name="OrderTotal" Type="int" />
+          <Property Name="OrderTime" Type="datetime" />
+        </EntityType>
+        <EntityContainer Name="StockModelStoreContainer">
+          <EntitySet Name="CustLogin" EntityType="Self.CustLogin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerInfo" EntityType="Self.CustomerInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderInfo" EntityType="Self.OrderInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PostCInfo" EntityType="Self.PostCInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PostInfo" EntityType="Self.PostInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProdInfo" EntityType="Self.ProdInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCommets" EntityType="Self.ProductCommets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VW_OrderAndDetail" EntityType="Self.VW_OrderAndDetail" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_OrderAndDetail].[ID] AS [ID], 
+    [VW_OrderAndDetail].[OrderId] AS [OrderId], 
+    [VW_OrderAndDetail].[ProdId] AS [ProdId], 
+    [VW_OrderAndDetail].[ProdPrice] AS [ProdPrice], 
+    [VW_OrderAndDetail].[ProdQuantity] AS [ProdQuantity], 
+    [VW_OrderAndDetail].[CustId] AS [CustId], 
+    [VW_OrderAndDetail].[OrderTotal] AS [OrderTotal], 
+    [VW_OrderAndDetail].[OrderTime] AS [OrderTime]
+    FROM [dbo].[VW_OrderAndDetail] AS [VW_OrderAndDetail]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StockModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="ProdId" Type="Int32" Nullable="false" />
+          <Property Name="ProdPrice" Type="Int32" Nullable="false" />
+          <Property Name="ProdQuantity" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PostCInfo">
+          <Key>
+            <PropertyRef Name="PostCategory" />
+          </Key>
+          <Property Name="PostCategory" Type="Int32" Nullable="false" />
+          <Property Name="CityName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PostInfo">
+          <Key>
+            <PropertyRef Name="PostId" />
+          </Key>
+          <Property Name="PostId" Type="Int32" Nullable="false" />
+          <Property Name="PostName" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="PostCategory" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProdInfo">
+          <Key>
+            <PropertyRef Name="ProdId" />
+          </Key>
+          <Property Name="ProdId" Type="Int32" Nullable="false" />
+          <Property Name="ProdName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProdCount" Type="Int32" Nullable="false" />
+          <Property Name="ProdCategory" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProdPrice" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="StockEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+          <EntitySet Name="PostCInfoes" EntityType="Self.PostCInfo" />
+          <EntitySet Name="PostInfoes" EntityType="Self.PostInfo" />
+          <EntitySet Name="ProdInfoes" EntityType="Self.ProdInfo" />
+          <EntitySet Name="CustLogins" EntityType="StockModel.CustLogin" />
+          <EntitySet Name="OrderInfoes" EntityType="StockModel.OrderInfo" />
+          <EntitySet Name="CustomerInfoes" EntityType="StockModel.CustomerInfo" />
+          <EntitySet Name="ProductCommets" EntityType="StockModel.ProductCommet" />
+          <EntitySet Name="VW_OrderAndDetail" EntityType="StockModel.VW_OrderAndDetail" />
+        </EntityContainer>
+        <EntityType Name="CustLogin">
+          <Key>
+            <PropertyRef Name="CustId" />
+          </Key>
+          <Property Name="CustId" Type="Int32" Nullable="false" />
+          <Property Name="CustLoginName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CustPassword" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="OrderInfo">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="CustId" Type="Int32" Nullable="false" />
+          <Property Name="OrderTotal" Type="Int32" />
+          <Property Name="OrderTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="CustomerInfo">
+          <Key>
+            <PropertyRef Name="CustId" />
+          </Key>
+          <Property Name="CustId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustRoad" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="CustCellPhone" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PostId" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PostCategory" Type="Int32" Nullable="false" />
+          <Property Name="CustLoginName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CustPassword" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ProductCommet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustId" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProdId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VW_OrderAndDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="ProdId" Type="Int32" Nullable="false" />
+          <Property Name="ProdPrice" Type="Int32" Nullable="false" />
+          <Property Name="ProdQuantity" Type="Int32" Nullable="false" />
+          <Property Name="CustId" Type="Int32" Nullable="false" />
+          <Property Name="OrderTotal" Type="Int32" />
+          <Property Name="OrderTime" Type="DateTime" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StockModelStoreContainer" CdmEntityContainer="StockEntities">
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="StockModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetail">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ProdId" ColumnName="ProdId" />
+                <ScalarProperty Name="ProdPrice" ColumnName="ProdPrice" />
+                <ScalarProperty Name="ProdQuantity" ColumnName="ProdQuantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostCInfoes">
+            <EntityTypeMapping TypeName="StockModel.PostCInfo">
+              <MappingFragment StoreEntitySet="PostCInfo">
+                <ScalarProperty Name="PostCategory" ColumnName="PostCategory" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostInfoes">
+            <EntityTypeMapping TypeName="StockModel.PostInfo">
+              <MappingFragment StoreEntitySet="PostInfo">
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="PostName" ColumnName="PostName" />
+                <ScalarProperty Name="PostCategory" ColumnName="PostCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProdInfoes">
+            <EntityTypeMapping TypeName="StockModel.ProdInfo">
+              <MappingFragment StoreEntitySet="ProdInfo">
+                <ScalarProperty Name="ProdId" ColumnName="ProdId" />
+                <ScalarProperty Name="ProdName" ColumnName="ProdName" />
+                <ScalarProperty Name="ProdCount" ColumnName="ProdCount" />
+                <ScalarProperty Name="ProdCategory" ColumnName="ProdCategory" />
+                <ScalarProperty Name="ProdPrice" ColumnName="ProdPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustLogins">
+            <EntityTypeMapping TypeName="StockModel.CustLogin">
+              <MappingFragment StoreEntitySet="CustLogin">
+                <ScalarProperty Name="CustPassword" ColumnName="CustPassword" />
+                <ScalarProperty Name="CustLoginName" ColumnName="CustLoginName" />
+                <ScalarProperty Name="CustId" ColumnName="CustId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderInfoes">
+            <EntityTypeMapping TypeName="StockModel.OrderInfo">
+              <MappingFragment StoreEntitySet="OrderInfo">
+                <ScalarProperty Name="OrderTime" ColumnName="OrderTime" />
+                <ScalarProperty Name="OrderTotal" ColumnName="OrderTotal" />
+                <ScalarProperty Name="CustId" ColumnName="CustId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerInfoes">
+            <EntityTypeMapping TypeName="StockModel.CustomerInfo">
+              <MappingFragment StoreEntitySet="CustomerInfo">
+                <ScalarProperty Name="CustPassword" ColumnName="CustPassword" />
+                <ScalarProperty Name="CustLoginName" ColumnName="CustLoginName" />
+                <ScalarProperty Name="PostCategory" ColumnName="PostCategory" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="CustCellPhone" ColumnName="CustCellPhone" />
+                <ScalarProperty Name="CustRoad" ColumnName="CustRoad" />
+                <ScalarProperty Name="CustName" ColumnName="CustName" />
+                <ScalarProperty Name="CustId" ColumnName="CustId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCommets">
+            <EntityTypeMapping TypeName="StockModel.ProductCommet">
+              <MappingFragment StoreEntitySet="ProductCommets">
+                <ScalarProperty Name="ProdId" ColumnName="ProdId" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="CustId" ColumnName="CustId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_OrderAndDetail">
+            <EntityTypeMapping TypeName="StockModel.VW_OrderAndDetail">
+              <MappingFragment StoreEntitySet="VW_OrderAndDetail">
+                <ScalarProperty Name="OrderTime" ColumnName="OrderTime" />
+                <ScalarProperty Name="OrderTotal" ColumnName="OrderTotal" />
+                <ScalarProperty Name="CustId" ColumnName="CustId" />
+                <ScalarProperty Name="ProdQuantity" ColumnName="ProdQuantity" />
+                <ScalarProperty Name="ProdPrice" ColumnName="ProdPrice" />
+                <ScalarProperty Name="ProdId" ColumnName="ProdId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram DiagramId="049f34d7e5084dd888aa156e751aaf28" Name="Diagram1">
+        <EntityTypeShape EntityType="StockModel.OrderDetail" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockModel.PostCInfo" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockModel.PostInfo" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockModel.ProdInfo" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockModel.CustLogin" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockModel.OrderInfo" Width="1.5" PointX="0.875" PointY="3.75" />
+        <EntityTypeShape EntityType="StockModel.CustomerInfo" Width="1.5" PointX="0.875" PointY="0.75" />
+        <EntityTypeShape EntityType="StockModel.ProductCommet" Width="1.5" PointX="6.875" PointY="3.625" />
+        <EntityTypeShape EntityType="StockModel.VW_OrderAndDetail" Width="1.5" PointX="0.75" PointY="6.75" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

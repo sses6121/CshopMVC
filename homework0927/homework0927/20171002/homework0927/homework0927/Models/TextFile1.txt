@@ -1,0 +1,20 @@
+﻿use Stock
+go
+
+CREATE TABLE [dbo].[ProductCommets] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [CustId] nvarchar(max)  NOT NULL,
+    [Content] nvarchar(max)  NOT NULL,
+    [CreateDate] datetime  NOT NULL,
+    [ProdId] int  NOT NULL
+);
+GO
+
+
+
+create view VW_OrderAndDetail AS(
+
+select ISNULL(NULL, 1) AS ID, 
+OrderInfo.OrderId,ProdId,ProdPrice,ProdQuantity,
+CustId,OrderTotal,OrderTime from OrderDetail 
+inner join OrderInfo on OrderDetail.OrderId=OrderInfo.OrderId)

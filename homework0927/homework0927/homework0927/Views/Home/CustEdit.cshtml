@@ -1,0 +1,35 @@
+﻿@using homework0927.Models;
+@model homework0927.Models.CustomerInfo
+
+@{
+    ViewBag.Title = "CustInfoEdit";
+}
+
+<h2>編輯會員資料</h2>
+
+<form method="post" action="">
+        <div class="form-group">
+            <input type="hidden" name="CustId" value="@Model.CustId" />
+            <label for="CustName">姓名：</label><input type="text" id="CustName" name="CustName" class="form-control" value="@Model.CustName" /><br />
+        </div><div class="form-group">
+        <label for="PostId">郵遞區號：</label><input type="text" id="PostId" name="PostId" class="form-control" value="@Model.PostId" /><br />
+    </div><div class="form-group">
+        <div class="form-group">
+            <label for="PostCategory">Country:</label>
+            <select class="form-control" name="PostCategory" id="PostCategory">
+                <option value="2" @((Model.PostCategory == 1) ? "selected" : "")>台北市</option>
+                <option value="4" @((Model.PostCategory == 4) ? "selected" : "")>台中市</option>
+                <option value="6" @((Model.PostCategory == 7) ? "selected" : "")>台南市</option>
+                <option value="8" @((Model.PostCategory == 8) ? "selected" : "")>高雄市</option>
+            </select>
+        </div>
+
+    </div><div class="form-group">
+        <label for="CustRoad">地址：</label><input type="text" id="CustRoad" name="CustRoad" class="form-control" value="@Model.CustRoad" /><br />
+    </div><div class="form-group">
+        <label for="CustCellPhone">手機號碼：</label><input type="tel" id="CustCellPhone" name="CustCellPhone" class="form-control" value="@Model.CustCellPhone" /><br />
+    </div>
+    <button type="submit" name="OKButton" class="btn btn-success">送出</button>
+    <a href="~/Home/Index" class="btn btn-danger">取消</a>
+</form>
+

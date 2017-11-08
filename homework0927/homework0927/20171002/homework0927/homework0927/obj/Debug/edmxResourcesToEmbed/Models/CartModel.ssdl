@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StockModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CustLogin">
+    <Key>
+      <PropertyRef Name="CustId" />
+    </Key>
+    <Property Name="CustId" Type="int" Nullable="false" />
+    <Property Name="CustLoginName" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CustPassword" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CustomerInfo">
+    <Key>
+      <PropertyRef Name="CustId" />
+    </Key>
+    <Property Name="CustId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CustName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CustRoad" Type="nvarchar" MaxLength="70" Nullable="false" />
+    <Property Name="CustCellPhone" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="PostId" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="PostCategory" Type="int" Nullable="false" />
+    <Property Name="CustLoginName" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CustPassword" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="ProdId" Type="int" Nullable="false" />
+    <Property Name="ProdPrice" Type="int" Nullable="false" />
+    <Property Name="ProdQuantity" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderInfo">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="CustId" Type="int" Nullable="false" />
+    <Property Name="OrderTotal" Type="int" />
+    <Property Name="OrderTime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PostCInfo">
+    <Key>
+      <PropertyRef Name="PostCategory" />
+    </Key>
+    <Property Name="PostCategory" Type="int" Nullable="false" />
+    <Property Name="CityName" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PostInfo">
+    <Key>
+      <PropertyRef Name="PostId" />
+    </Key>
+    <Property Name="PostId" Type="int" Nullable="false" />
+    <Property Name="PostName" Type="nchar" MaxLength="8" />
+    <Property Name="PostCategory" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProdInfo">
+    <Key>
+      <PropertyRef Name="ProdId" />
+    </Key>
+    <Property Name="ProdId" Type="int" Nullable="false" />
+    <Property Name="ProdName" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="ProdCount" Type="int" Nullable="false" />
+    <Property Name="ProdCategory" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="ProdPrice" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductCommets">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="ProdId" Type="int" Nullable="false" />
+  </EntityType>
+  <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'Stock.dbo.VW_OrderAndDetail' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+  <EntityType Name="VW_OrderAndDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="ProdId" Type="int" Nullable="false" />
+    <Property Name="ProdPrice" Type="int" Nullable="false" />
+    <Property Name="ProdQuantity" Type="int" Nullable="false" />
+    <Property Name="CustId" Type="int" Nullable="false" />
+    <Property Name="OrderTotal" Type="int" />
+    <Property Name="OrderTime" Type="datetime" />
+  </EntityType>
+  <EntityContainer Name="StockModelStoreContainer">
+    <EntitySet Name="CustLogin" EntityType="Self.CustLogin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CustomerInfo" EntityType="Self.CustomerInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderInfo" EntityType="Self.OrderInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PostCInfo" EntityType="Self.PostCInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PostInfo" EntityType="Self.PostInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProdInfo" EntityType="Self.ProdInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductCommets" EntityType="Self.ProductCommets" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VW_OrderAndDetail" EntityType="Self.VW_OrderAndDetail" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VW_OrderAndDetail].[ID] AS [ID], 
+    [VW_OrderAndDetail].[OrderId] AS [OrderId], 
+    [VW_OrderAndDetail].[ProdId] AS [ProdId], 
+    [VW_OrderAndDetail].[ProdPrice] AS [ProdPrice], 
+    [VW_OrderAndDetail].[ProdQuantity] AS [ProdQuantity], 
+    [VW_OrderAndDetail].[CustId] AS [CustId], 
+    [VW_OrderAndDetail].[OrderTotal] AS [OrderTotal], 
+    [VW_OrderAndDetail].[OrderTime] AS [OrderTime]
+    FROM [dbo].[VW_OrderAndDetail] AS [VW_OrderAndDetail]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

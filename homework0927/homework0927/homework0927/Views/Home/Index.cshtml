@@ -1,0 +1,160 @@
+﻿@using homework0927.Models;
+@model List<homework0927.Models.ProdInfo>
+@{
+    ViewBag.Title = "Index";
+
+}
+<style>
+
+    table {
+        border-collapse: collapse;
+        width: 100%
+    }
+
+    td {
+        border: 1px solid #eee;
+        padding: 10px;
+    }
+
+    @@media screen and (max-width: 600) {
+
+        table {
+            display: block;
+        }
+
+        td {
+            display: block;
+            padding: 5px 0;
+            border: none;
+        }
+
+            td img {
+                display: block;
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                max-width: none;
+            }
+    }
+
+    @@media screen and (min-device-width : 300px) and (max-device-width : 600px)  {
+
+        table {
+            display: block;
+        }
+
+        td {
+            display: block;
+            padding: 5px 0;
+            border: none;
+        }
+
+            td img {
+                display: block;
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                max-width: none;
+            }
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+        width: auto;
+    }
+    /*img {
+        height: 300px;
+    }*/
+</style>
+<form class="form-horizontal">
+    <input type="text" hidden name="CustId" value="@Session["CustId"]" />
+    <div class="container">
+        <table class="table">
+            
+            <tr>
+
+                    <td>
+    @foreach (var item in Model) {
+        <div>
+            <img src='@String.Format("/images/{0}.jpeg",item.ProdId)' title="@item.ProdName" />
+        </div>
+        <div class="form-group container" align="justify">
+            @*<select class="selectpicker show-tick form-control" id="ProdId" name="ProdId" value="@item.ProdId" style="width:auto;">
+                <option value="" selected disabled>訂購數量 &hellip;</option>
+                <option value="1" name="ProdQuantity">1</option>
+                <option value="2" name="ProdQuantity">2</option>
+                <option value="3" name="ProdQuantity">3</option>
+                <option value="4" name="ProdQuantity">4</option>
+                <option value="5" name="ProdQuantity">5</option>
+            </select>*@
+            <label id="ProdName" name="ProdName">產品名稱：@item.ProdName</label>@*&nbsp;&nbsp;*@<br />
+            <label id="ProdPrice" name="ProdPrice">價格：@item.ProdPrice 元</label><br />
+            <a onclick="AddToCart('@item.ProdId')" href="javascript:void(0);"
+               class="btn btn-primary" role="button">
+                加入購物車
+            </a>
+            <a class="btn btn-default" role="button" href="/Home/Detail/@item.ProdId">
+                詳細資訊
+            </a>
+        </div>}
+</td>
+                                
+            @*<td>
+            <div><img src="~/images/1.jpeg" title="紅茶" /></div>
+
+            <div class="form-group container" align="justify">
+
+                <select class="selectpicker show-tick form-control" id="ProdId" name="ProdId" value="1" style="width:auto;">
+                    <option value="" selected disabled>訂購數量 &hellip;</option>
+                    <option value="1" name="ProdQuantity">1</option>
+                    <option value="2" name="ProdQuantity">2</option>
+                    <option value="3" name="ProdQuantity">3</option>
+                    <option value="4" name="ProdQuantity">4</option>
+                    <option value="5" name="ProdQuantity">5</option>
+                </select>
+                <lablel id="ProdPrice" name="ProdPrice">價格：10元</lablel>
+            </div>
+        </td>
+
+
+            <td>
+            <div><img src="~/images/2.jpeg" title="綠茶" /></div>
+
+            <div class="form-group container" align="justify">
+
+                <select class="selectpicker show-tick form-control" id="ProdId" name="ProdId" value="2" style="width:auto;">
+                    <option value="" selected disabled>訂購數量 &hellip;</option>
+                    <option value="1" name="ProdQuantity">1</option>
+                    <option value="2" name="ProdQuantity">2</option>
+                    <option value="3" name="ProdQuantity">3</option>
+                    <option value="4" name="ProdQuantity">4</option>
+                    <option value="5" name="ProdQuantity">5</option>
+                </select>
+                <lablel id="ProdPrice" name="ProdPrice">價格：10元</lablel>
+            </div>
+        </td>
+
+        <td>
+            <div> <img src="~/images/3.jpeg" title="咖啡" /></div>
+            <div class="form-group container" align="justify">
+                <select class="selectpicker show-tick form-control" id="ProdId" name="ProdId" value="3" style="width:auto;">
+                    <option value="" selected disabled>訂購數量 &hellip;</option>
+                    <option value="1" name="ProdQuantity">1</option>
+                    <option value="2" name="ProdQuantity">2</option>
+                    <option value="3" name="ProdQuantity">3</option>
+                    <option value="4" name="ProdQuantity" >4</option>
+                    <option value="5" name="ProdQuantity">5</option>
+                </select>
+                <lablel id="ProdPrice" name="ProdPrice">價格：50元</lablel>
+            </div>
+        </td>*@
+            </tr>
+                
+        </table>
+
+    </div>
+    
+</form>
+
+

@@ -1,0 +1,121 @@
+﻿@using homework0927.Models;
+@*@model Tuple<VW_OrderAndDetail, List<CustomerInfo>>*@
+@*@model List<homework0927.Models.VW_OrderAndDetailAndCust>*@
+@model List<homework0927.Models.CustomerInfo>
+
+@{
+    ViewBag.Title = "結帳";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    //取得目前購物車
+    var cart = homework0927.Models.Cart.Operation.GetCurrentCart();
+    Cust cust = new Cust();
+    int custId = Convert.ToInt32(Session["CustId"]);
+    //string custName = @cust.GetUrderName(Convert.ToInt32(Session["CustId"]));
+    //string custAddress = @cust.GetUrderAddress(Convert.ToInt32(Session["CustId"]));
+    //string custCellPhone = @cust.GetUrderCellPhone(Convert.ToInt32(Session["CustId"]));
+    string custName = "";
+    string custAddress = "";
+    string custCellPhone = "";
+    int custPostCategory = 0;
+    string custPostAddress = "";
+    //foreach (var item in Model) {
+    //   custName = item.CustName;
+    //   custAddress = item.CityName + item.CustRoad;
+    //   custCellPhone = item.CustCellPhone;
+    //}
+
+    foreach (var item in Model) {
+        custName = item.CustName;
+        //switch (item.PostCategory) {
+        //    case 1:
+        //        custCountryName="台北市"
+        //}
+        custAddress = cust.GetUrderAddress(item.CustId);
+        custCellPhone = item.CustCellPhone;
+        custPostCategory = item.PostCategory;
+        custPostAddress = item.CustRoad;
+    }
+}
+
+<h2>結帳</h2>
+@*<input type="text" hidden name="CustId" value="@Session["CustId"]" />*@
+@* 列出購物車內商品讓使用者作最後確認 *@
+<table class="table">
+    <tr><th>商品圖</th><th>名稱</th><th>售價</th><th>數量</th><th>小計</th></tr>
+    @*/* 使用foreach將所有商品列出 */*@
+    @foreach (var pd in cart) {
+        <tr>
+            <td><img src='@String.Format("/images/{0}.jpeg",pd.ProdId)' width="50" height="50" /></td>
+            <td>@pd.ProdName</td>
+            <td>@pd.ProdPrice</td>
+            <td>@pd.ProdQuantity</td>
+            <td>@pd.Amount</td>
+        </tr>
+    }
+    <tr><td colspan="3"></td><td>總計</td><td>@cart.TotalAmount &nbsp;元</td></tr>
+</table>
+
+
+@* 讓使用者填入寄送資訊 *@
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+@*<form>*@
+    <div class="form-horizontal">
+        
+        <h4>收貨人資訊</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        <div class="form-group">
+            <label class="control-label col-md-2" for="CustName">收貨人姓名</label>
+            <div class="col-md-10">
+                <input name="CustName" class="form-control text-box single-line" id="CustName" type="text" value="@custName"
+                       data-val-required="收貨人姓名 欄位是必要項。" data-val="true" data-val-length-min="2"
+                       data-val-length-max="30" data-val-length="收貨人姓名 的長度至少必須為 2 個字元。">
+                <span class="field-validation-valid text-danger" data-valmsg-replace="true" data-valmsg-for="RecieverName"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="CustCellPhone">收貨人電話</label>
+
+            <div class="col-md-10">
+
+                @*<label name="CustCellPhone" id="RecieverPhone">@cust.GetUrderCellPhone(Model.CustId)</label>*@
+                <input name="CustCellPhone" class="form-control text-box single-line" id="CustCellPhone" type="text" value="@custCellPhone"
+                       data-val-required="收貨人電話 欄位是必要項。" data-val="true" data-val-length-min="8" data-val-length-max="15"
+                       data-val-length="收貨人電話 的長度至少必須為 8 個字元。">
+                <span class="field-validation-valid text-danger" data-valmsg-replace="true" data-valmsg-for="CustCellPhone"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="PostId">收貨人縣市</label>
+            <div class="col-md-10">
+                <select class="form-control text-box single-line" name="PostCategory">
+                    <option value="2" @((custPostCategory == 1) ? "selected" : "")>台北市</option>
+                    <option value="4" @((custPostCategory == 4) ? "selected" : "")>台中市</option>
+                    <option value="6" @((custPostCategory == 7) ? "selected" : "")>台南市</option>
+                    <option value="8" @((custPostCategory == 8) ? "selected" : "")>高雄市</option>
+                </select>
+            </div>
+                <label class="control-label col-md-2" for="RecieverAddress">收貨人住址</label>
+                <div class="col-md-10">
+                    @*<label name="GetUrderAddress" id="RecieverAddress">@cust.GetUrderAddress(Model.CustId)</label>*@
+                    <input name="RecieverAddress" class="form-control text-box single-line" id="RecieverAddress" type="text" value="@custPostAddress"
+                           data-val-required="收貨人住址 欄位是必要項。" data-val="true" data-val-length-min="8" data-val-length-max="256"
+                           data-val-length="收貨人住址 的長度至少必須為 8 個字元。">
+                    <span class="field-validation-valid text-danger" data-valmsg-replace="true" data-valmsg-for="RecieverAddress"></span>
+                </div>
+            </div>
+        
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="確定購買" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    }
+
+@*</form>*@

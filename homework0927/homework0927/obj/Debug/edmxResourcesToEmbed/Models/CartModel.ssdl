@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StockModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CustLogin">
+    <Key>
+      <PropertyRef Name="CustId" />
+    </Key>
+    <Property Name="CustId" Type="int" Nullable="false" />
+    <Property Name="CustLoginName" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CustPassword" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CustomerInfo">
+    <Key>
+      <PropertyRef Name="CustId" />
+    </Key>
+    <Property Name="CustId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CustName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CustRoad" Type="nvarchar" MaxLength="70" Nullable="false" />
+    <Property Name="CustCellPhone" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="PostId" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="PostCategory" Type="int" Nullable="false" />
+    <Property Name="CustLoginName" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CustPassword" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="ProdId" Type="int" Nullable="false" />
+    <Property Name="ProdPrice" Type="int" Nullable="false" />
+    <Property Name="ProdQuantity" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderInfo">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="CustId" Type="int" Nullable="false" />
+    <Property Name="OrderTotal" Type="int" />
+    <Property Name="OrderTime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PostCInfo">
+    <Key>
+      <PropertyRef Name="PostCategory" />
+    </Key>
+    <Property Name="PostCategory" Type="int" Nullable="false" />
+    <Property Name="CityName" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PostInfo">
+    <Key>
+      <PropertyRef Name="PostId" />
+    </Key>
+    <Property Name="PostId" Type="int" Nullable="false" />
+    <Property Name="PostName" Type="nchar" MaxLength="8" />
+    <Property Name="PostCategory" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProdInfo">
+    <Key>
+      <PropertyRef Name="ProdId" />
+    </Key>
+    <Property Name="ProdId" Type="int" Nullable="false" />
+    <Property Name="ProdName" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="ProdCount" Type="int" Nullable="false" />
+    <Property Name="ProdCategory" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="ProdPrice" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="StockModelStoreContainer">
+    <EntitySet Name="CustLogin" EntityType="Self.CustLogin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CustomerInfo" EntityType="Self.CustomerInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderInfo" EntityType="Self.OrderInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PostCInfo" EntityType="Self.PostCInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PostInfo" EntityType="Self.PostInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProdInfo" EntityType="Self.ProdInfo" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

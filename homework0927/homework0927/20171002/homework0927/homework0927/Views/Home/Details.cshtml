@@ -1,0 +1,30 @@
+﻿@using homework0927.Models;
+@model homework0927.Models.OrderDetail
+@model IEnumerable<OrderDetail>
+@{
+    ViewBag.Title = "Details";
+}
+}
+
+<h2>@String.Format("訂單編號{0}商品列表", this.Model.First().Id)</h2>
+<hr />
+<table class="table">
+    <tr>
+        <th>商品名稱</th>
+        <th>商品價格</th>
+        <th>購買數量</th>
+    </tr>
+    <tr>
+        @foreach (var item in Model) {
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+        }
+</table>
+@Html.ActionLink("回商品列表", "MyOrder", new { }, new { @class = "btn btn-default" }) 

@@ -1,0 +1,80 @@
+﻿
+@using homework0927.Models;
+
+@model List<homework0927.Models.VW_MyOrder>
+
+@{
+    ViewBag.Title = "MyOrder";
+    Cust cust = new Cust();
+    cust.UserId = Convert.ToInt32(Session["CustId"]);
+}
+
+<h2>我的訂單</h2>
+@*<form>
+        <input type="text" hidden name="CustId" value="@Session["Custid"]" />
+    </form>*@
+
+
+<input type="text" hidden name="CustId" value='@Session["CustId"]' />
+<div class="container" style="border:1px solid #c9c9c9;">
+    <div class="row">
+        <div class="col-md-12 col-sm-6">
+            <div class="table-responsive">
+                <table class="rwd-table">
+
+                    <tr>
+                        <th>訂單單號</th>
+                        <th>訂單總金額</th>
+                        <th>收貨人姓名</th>
+                        <th id="hid">收貨人電話</th>
+                        <th id="hid">收貨人住址</th>
+                        <th>訂單明細</th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model) {
+
+                        <tr>
+                            <td data-th="訂單編號">
+                                @item.OrderId
+                            </td>
+                            <td data-th="訂單總額">
+                                @*@if (tempTotal != item.OrderTotal) {
+                                    <input type="hidden"value=@tempTotal=@item.OrderTotal /></input>*@
+                                @*@item.ProdId*@
+                                @item.OrderTotal &nbsp;元
+                                @*@cust.GetUrderProd(item.ProdId)*@
+                                @*}*@
+                            </td>
+                            <td data-th="姓名">
+                                @item.CustName
+                                @*@cust.GetUrderName(Convert.ToInt32(Session["CustId"]))*@
+                            </td>
+                            <td data-th="電話">
+                                @item.CustCellPhone
+                            @*@cust.GetUrderCellPhone(Convert.ToInt32(Session["CustId"]))*@
+                        </td>
+                        <td data-th="地址">
+                            @cust.GetUrderAddress(Convert.ToInt32(Session["CustId"]))
+                        </td>
+                        <td data-th="明細">
+
+                            <button type="submit" class="btn btn-info" onclick="location.href = 'Details/@item.OrderId'">
+                                訂單明細
+                            </button>
+                            <form>
+                                <input type="hidden" name="OrderId" value="@item.OrderId" />
+                                <input type="hidden" name="CustId" value='@Session["CustId"]' />
+                            </form>
+
+
+
+                            @*@Html.ActionLink("商品明細", "MyOrderDetail", new { id = item.OrderId }
+                                , new { class = "btn btn-default" })*@
+                        </td>
+                    </tr>
+                    }
+                </table>
+            </div>
+            </div>
+        </div>
+    </div>

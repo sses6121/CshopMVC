@@ -1,0 +1,51 @@
+﻿@using homework0927.Models;
+@*@model homework0927.Models.OrderDetail
+@model IEnumerable<OrderDetail>*@
+@model List<homework0927.Models.VW_OrderAndDetail>
+    @{
+        ViewBag.Title = "Details";
+        Cust cust = new Cust();
+    }
+    
+<input type="text" hidden name="OrderId" value="@Session["OrderId"]" />
+<input type="text" hidden name="Custid" value='@Session["CustId"]' />
+    <h2>@String.Format("訂單編號{0}：", Model.First().OrderId)<br />
+        <br />
+        @Html.ActionLink("回商品列表", "Index", new { }, new { @class = "btn btn-default" })
+        
+    </h2>
+    <hr />
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>商品名稱</th>
+            <th>商品價格</th>
+            <th>購買數量</th>
+            <th>小計</th>
+        </tr>
+
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @cust.GetUrderProd(item.ProdId)
+                    @*@Html.DisplayFor(modelItem => item.Name)*@
+                </td>
+                <td>
+                    @item.ProdPrice
+                    @*@Html.DisplayFor(modelItem => item.Price)*@
+                </td>
+                <td>
+                    @item.ProdQuantity
+                    @*@Html.DisplayFor(modelItem => item.Quantity)*@
+                </td>
+                <td>
+                    @cust.GetOrderDetailTotal(item.ProdPrice, item.ProdQuantity)
+                    @*@Html.DisplayFor(modelItem => item.Quantity)*@
+                </td>
+            </tr>
+        }
+        <tr><td colspan="4" align="center"><h3>總計</h3></td></tr>
+        <tr><td colspan="4" align="center"><h3>@Model.First().OrderTotal</h3></td></tr>
+    </table>
+    </div>
+    @*@Html.ActionLink("回商品列表", "MyOrder", new { }, new { @class = "btn btn-default" })*@

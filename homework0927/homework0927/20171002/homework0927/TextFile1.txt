@@ -1,0 +1,20 @@
+<button type="button" class="btn btn-default btn-lg" id="triggerLoginBtn">登入</button>
+<div id="loginMadal" class="modal fade in" role="dialog" aria-hidden="false" style="display :block">
+    <div class="modal-dialog">
+        <button type="button" class="close" data-dismiss="modal">x</button><h4>請登入</h4>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="userNameTextBox"><span class="glyphicon glyphicon-user"></span>帳號</label>
+                <input type="text" id="userNameTextBox" class="form-control" placeholder="請輸入帳號" />
+            </div>
+            <div class="form-group">
+                <label for="passwordTextBox"><span class="glyphicon glyphicon-lock"></span>密碼</label>
+            </div>
+            <div class="checkbox"><lable><input type="checkbox" id="remeberMeCheckBox" checked />記住我(下次自動登入)</lable></div>
+            <button type="button" id="loginButton" class="btn btn-success"><span class="glyphicon glyphicon-off"></span>登入</button>
+            <button type="button" id="cancelButton" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>取消</button>
+        </form>
+    </div>
+</div>

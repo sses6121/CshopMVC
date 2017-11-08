@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "MyOrderDetail";
+}
+
+
+@using homework0927.Models;
+@*@model homework0927.Models.VW_OrderAndDetail*@
+       @*@model List<homework0927.Models.CustomerInfo>*@
+@model Tuple<VW_OrderAndDetail,List<CustomerInfo>>
+
+    @{
+        ViewBag.Title = "結帳";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+
+        //取得目前購物車
+        var cart = Cart.Operation.GetCurrentCart();
+        Cust cust = new Cust();
+        int custId = Convert.ToInt32(Session["CustId"]);
+
+
+    }
+
+    <h2>結帳</h2>
+
+    @* 列出購物車內商品讓使用者作最後確認 *@
+    <table class="table">
+        <tr><th>商品圖</th><th>名稱</th><th>售價</th><th>數量</th><th>小計</th></tr>
+        @*/* 使用foreach將所有商品列出 */*@
+        @foreach (var pd in cart) {
+            <tr>
+                @*<td><img src=@String.Format("/images/{0}.jpeg",pd.ProdId)' width="50" height="50" /></td>*@
+                <td>@pd.ProdName</td>
+                <td>@pd.ProdPrice</td>
+                <td>@pd.ProdQuantity</td>
+                <td>@pd.Amount</td>
+            </tr>
+        
+        <tr><td colspan="3"></td><td>總計</td><td> @pd.Amount</td></tr>}
+        @*<tr><td colspan="3"></td><td>總計</td><td>@cart.TotalAmount.ToString()</td></tr>*@
+    </table>
+
+
+    @* 讓使用者填入寄送資訊 *@
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>收貨人資訊</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="control-label col-md-2" for="RecieverName">收貨人姓名</label>
+                <div class="col-md-10">
+                    <label name="CustName" id="RecieverName">@*@custId*@ @cust.GetUrderName(custId)</label>
+                    <input name="RecieverName" class="form-control text-box single-line" id="RecieverName" type="text" value="@cust.GetUrderName(custId)"
+                           data-val-required="收貨人姓名 欄位是必要項。" data-val="true" data-val-length-min="2"
+                           data-val-length-max="30" data-val-length="收貨人姓名 的長度至少必須為 2 個字元。">
+                    <span class="field-validation-valid text-danger" data-valmsg-replace="true" data-valmsg-for="RecieverName"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2" for="RecieverPhone">收貨人電話</label>
+
+                <div class="col-md-10">
+                    @*<label name="CustCellPhone" id="RecieverPhone">@cust.GetUrderCellPhone(Model.CustId)</label>*@
+                    <input name="RecieverPhone" class="form-control text-box single-line" id="RecieverPhone" type="text" value=""
+                           data-val-required="收貨人電話 欄位是必要項。" data-val="true" data-val-length-min="8" data-val-length-max="15"
+                           data-val-length="收貨人電話 的長度至少必須為 8 個字元。">
+                    <span class="field-validation-valid text-danger" data-valmsg-replace="true" data-valmsg-for="RecieverPhone"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2" for="RecieverAddress">收貨人住址</label>
+                <div class="col-md-10">
+                    @*<label name="GetUrderAddress" id="RecieverAddress">@cust.GetUrderAddress(Model.CustId)</label>*@
+                    <input name="RecieverAddress" class="form-control text-box single-line" id="RecieverAddress" type="text" value=""
+                           data-val-required="收貨人住址 欄位是必要項。" data-val="true" data-val-length-min="8" data-val-length-max="256"
+                           data-val-length="收貨人住址 的長度至少必須為 8 個字元。">
+                    <span class="field-validation-valid text-danger" data-valmsg-replace="true" data-valmsg-for="RecieverAddress"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="確定購買" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+

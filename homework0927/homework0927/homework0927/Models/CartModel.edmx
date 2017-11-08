@@ -1,0 +1,692 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="StockModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CustLogin">
+          <Key>
+            <PropertyRef Name="CustId" />
+          </Key>
+          <Property Name="CustId" Type="int" Nullable="false" />
+          <Property Name="CustLoginName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="CustPassword" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomerInfo">
+          <Key>
+            <PropertyRef Name="CustId" />
+          </Key>
+          <Property Name="CustId" Type="int" Nullable="false" />
+          <Property Name="CustName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustRoad" Type="nvarchar" MaxLength="70" Nullable="false" />
+          <Property Name="CustCellPhone" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="PostId" Type="int" />
+          <Property Name="PostCategory" Type="int" Nullable="false" />
+          <Property Name="CustLoginName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="CustPassword" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="ProdId" Type="int" Nullable="false" />
+          <Property Name="ProdPrice" Type="int" Nullable="false" />
+          <Property Name="ProdQuantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderInfo">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustId" Type="int" Nullable="false" />
+          <Property Name="OrderTotal" Type="int" />
+          <Property Name="OrderTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PostCInfo">
+          <Key>
+            <PropertyRef Name="PostCategory" />
+          </Key>
+          <Property Name="PostCategory" Type="int" Nullable="false" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PostInfo">
+          <Key>
+            <PropertyRef Name="PostId" />
+          </Key>
+          <Property Name="PostId" Type="int" Nullable="false" />
+          <Property Name="PostName" Type="nchar" MaxLength="8" />
+          <Property Name="PostCategory" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProdInfo">
+          <Key>
+            <PropertyRef Name="ProdId" />
+          </Key>
+          <Property Name="ProdId" Type="int" Nullable="false" />
+          <Property Name="ProdName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ProdCount" Type="int" Nullable="false" />
+          <Property Name="ProdCategory" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="ProdPrice" Type="int" Nullable="false" />
+          <Property Name="ProdContent" Type="nvarchar(max)" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'Stock.dbo.VW_MyOrder' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="VW_MyOrder">
+          <Key>
+            <PropertyRef Name="OrderId" />
+            <PropertyRef Name="CustName" />
+            <PropertyRef Name="CustCellPhone" />
+            <PropertyRef Name="CustId" />
+          </Key>
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="CustId" Type="int" Nullable="false" />
+          <Property Name="CustName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustCellPhone" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="OrderTotal" Type="int" />
+          <Property Name="OrderTime" Type="datetime" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'Stock.dbo.VW_OrderAndDetail' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="VW_OrderAndDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+            
+            
+            
+            
+            
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="ProdId" Type="int" Nullable="false" />
+          <Property Name="ProdPrice" Type="int" Nullable="false" />
+          <Property Name="ProdQuantity" Type="int" Nullable="false" />
+          <Property Name="CustId" Type="int" Nullable="false" />
+          <Property Name="OrderTotal" Type="int" />
+          <Property Name="OrderTime" Type="datetime" />
+        </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'Stock.dbo.VW_OrderAndDetailAndCust' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="VW_OrderAndDetailAndCust">
+          <Key>
+            
+            
+            
+            
+            
+            
+            
+            
+            <PropertyRef Name="id" />
+            
+            
+          </Key>
+          <Property Name="PostName" Type="nchar" MaxLength="8" />
+          <Property Name="PostCategory" Type="int" Nullable="false" />
+          <Property Name="ProdName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="OrderTotal" Type="int" />
+          <Property Name="OrderTime" Type="datetime" />
+          <Property Name="ProdPrice" Type="int" Nullable="false" />
+          <Property Name="ProdQuantity" Type="int" Nullable="false" />
+          <Property Name="CustName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustRoad" Type="nvarchar" MaxLength="70" Nullable="false" />
+          <Property Name="CustCellPhone" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="CustId" Type="int" Nullable="false" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_OrderDetail_OrderInfo">
+          <End Role="OrderInfo" Type="Self.OrderInfo" Multiplicity="1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderInfo">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_ProdInfo">
+          <End Role="ProdInfo" Type="Self.ProdInfo" Multiplicity="1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProdInfo">
+              <PropertyRef Name="ProdId" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ProdId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_ProdInfo1">
+          <End Role="ProdInfo" Type="Self.ProdInfo" Multiplicity="1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProdInfo">
+              <PropertyRef Name="ProdId" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ProdId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderInfo_CustomerInfo">
+          <End Role="CustomerInfo" Type="Self.CustomerInfo" Multiplicity="1" />
+          <End Role="OrderInfo" Type="Self.OrderInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerInfo">
+              <PropertyRef Name="CustId" />
+            </Principal>
+            <Dependent Role="OrderInfo">
+              <PropertyRef Name="CustId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostInfo_PostCInfo">
+          <End Role="PostCInfo" Type="Self.PostCInfo" Multiplicity="1" />
+          <End Role="PostInfo" Type="Self.PostInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PostCInfo">
+              <PropertyRef Name="PostCategory" />
+            </Principal>
+            <Dependent Role="PostInfo">
+              <PropertyRef Name="PostCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StockModelStoreContainer">
+          <EntitySet Name="CustLogin" EntityType="Self.CustLogin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerInfo" EntityType="Self.CustomerInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderInfo" EntityType="Self.OrderInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PostCInfo" EntityType="Self.PostCInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PostInfo" EntityType="Self.PostInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProdInfo" EntityType="Self.ProdInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VW_MyOrder" EntityType="Self.VW_MyOrder" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_MyOrder].[OrderId] AS [OrderId], 
+    [VW_MyOrder].[CustId] AS [CustId], 
+    [VW_MyOrder].[CustName] AS [CustName], 
+    [VW_MyOrder].[CustCellPhone] AS [CustCellPhone], 
+    [VW_MyOrder].[OrderTotal] AS [OrderTotal], 
+    [VW_MyOrder].[OrderTime] AS [OrderTime]
+    FROM [dbo].[VW_MyOrder] AS [VW_MyOrder]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VW_OrderAndDetail" EntityType="Self.VW_OrderAndDetail" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_OrderAndDetail].[ID] AS [ID], 
+    [VW_OrderAndDetail].[OrderId] AS [OrderId], 
+    [VW_OrderAndDetail].[ProdId] AS [ProdId], 
+    [VW_OrderAndDetail].[ProdPrice] AS [ProdPrice], 
+    [VW_OrderAndDetail].[ProdQuantity] AS [ProdQuantity], 
+    [VW_OrderAndDetail].[CustId] AS [CustId], 
+    [VW_OrderAndDetail].[OrderTotal] AS [OrderTotal], 
+    [VW_OrderAndDetail].[OrderTime] AS [OrderTime]
+    FROM [dbo].[VW_OrderAndDetail] AS [VW_OrderAndDetail]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VW_OrderAndDetailAndCust" EntityType="Self.VW_OrderAndDetailAndCust" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_OrderAndDetailAndCust].[PostName] AS [PostName], 
+    [VW_OrderAndDetailAndCust].[PostCategory] AS [PostCategory], 
+    [VW_OrderAndDetailAndCust].[ProdName] AS [ProdName], 
+    [VW_OrderAndDetailAndCust].[OrderId] AS [OrderId], 
+    [VW_OrderAndDetailAndCust].[OrderTotal] AS [OrderTotal], 
+    [VW_OrderAndDetailAndCust].[OrderTime] AS [OrderTime], 
+    [VW_OrderAndDetailAndCust].[ProdPrice] AS [ProdPrice], 
+    [VW_OrderAndDetailAndCust].[ProdQuantity] AS [ProdQuantity], 
+    [VW_OrderAndDetailAndCust].[CustName] AS [CustName], 
+    [VW_OrderAndDetailAndCust].[CustRoad] AS [CustRoad], 
+    [VW_OrderAndDetailAndCust].[CustCellPhone] AS [CustCellPhone], 
+    [VW_OrderAndDetailAndCust].[id] AS [id], 
+    [VW_OrderAndDetailAndCust].[CustId] AS [CustId], 
+    [VW_OrderAndDetailAndCust].[CityName] AS [CityName]
+    FROM [dbo].[VW_OrderAndDetailAndCust] AS [VW_OrderAndDetailAndCust]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_OrderDetail_OrderInfo" Association="Self.FK_OrderDetail_OrderInfo">
+            <End Role="OrderInfo" EntitySet="OrderInfo" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_ProdInfo" Association="Self.FK_OrderDetail_ProdInfo">
+            <End Role="ProdInfo" EntitySet="ProdInfo" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_ProdInfo1" Association="Self.FK_OrderDetail_ProdInfo1">
+            <End Role="ProdInfo" EntitySet="ProdInfo" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderInfo_CustomerInfo" Association="Self.FK_OrderInfo_CustomerInfo">
+            <End Role="CustomerInfo" EntitySet="CustomerInfo" />
+            <End Role="OrderInfo" EntitySet="OrderInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostInfo_PostCInfo" Association="Self.FK_PostInfo_PostCInfo">
+            <End Role="PostCInfo" EntitySet="PostCInfo" />
+            <End Role="PostInfo" EntitySet="PostInfo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StockModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="ProdId" Type="Int32" Nullable="false" />
+          <Property Name="ProdPrice" Type="Int32" Nullable="false" />
+          <Property Name="ProdQuantity" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OrderInfo" Relationship="StockModel.FK_OrderDetail_OrderInfo" FromRole="OrderDetail" ToRole="OrderInfo" />
+          <NavigationProperty Name="ProdInfo" Relationship="StockModel.FK_OrderDetail_ProdInfo" FromRole="OrderDetail" ToRole="ProdInfo" />
+          <NavigationProperty Name="ProdInfo1" Relationship="StockModel.FK_OrderDetail_ProdInfo1" FromRole="OrderDetail" ToRole="ProdInfo" />
+        </EntityType>
+        <EntityType Name="PostInfo">
+          <Key>
+            <PropertyRef Name="PostId" />
+          </Key>
+          <Property Name="PostId" Type="Int32" Nullable="false" />
+          <Property Name="PostName" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="PostCategory" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PostCInfo" Relationship="StockModel.FK_PostInfo_PostCInfo" FromRole="PostInfo" ToRole="PostCInfo" />
+        </EntityType>
+        <EntityType Name="ProdInfo">
+          <Key>
+            <PropertyRef Name="ProdId" />
+          </Key>
+          <Property Name="ProdId" Type="Int32" Nullable="false" />
+          <Property Name="ProdName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProdCount" Type="Int32" Nullable="false" />
+          <Property Name="ProdCategory" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProdPrice" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OrderDetails" Relationship="StockModel.FK_OrderDetail_ProdInfo" FromRole="ProdInfo" ToRole="OrderDetail" />
+          <NavigationProperty Name="OrderDetails1" Relationship="StockModel.FK_OrderDetail_ProdInfo1" FromRole="ProdInfo" ToRole="OrderDetail" />
+          <Property Name="ProdContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="StockEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+          <EntitySet Name="PostInfoes" EntityType="Self.PostInfo" />
+          <EntitySet Name="ProdInfoes" EntityType="Self.ProdInfo" />
+          <EntitySet Name="CustLogins" EntityType="StockModel.CustLogin" />
+          <EntitySet Name="OrderInfoes" EntityType="StockModel.OrderInfo" />
+          <EntitySet Name="VW_OrderAndDetail" EntityType="StockModel.VW_OrderAndDetail" />
+          <AssociationSet Name="FK_OrderInfo_CustLogin" Association="StockModel.FK_OrderInfo_CustLogin">
+            <End Role="CustLogin" EntitySet="CustLogins" />
+            <End Role="OrderInfo" EntitySet="OrderInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_OrderInfo" Association="StockModel.FK_OrderDetail_OrderInfo">
+            <End Role="OrderInfo" EntitySet="OrderInfoes" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_ProdInfo" Association="StockModel.FK_OrderDetail_ProdInfo">
+            <End Role="ProdInfo" EntitySet="ProdInfoes" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_ProdInfo1" Association="StockModel.FK_OrderDetail_ProdInfo1">
+            <End Role="ProdInfo" EntitySet="ProdInfoes" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <EntitySet Name="VW_OrderAndDetailAndCust" EntityType="StockModel.VW_OrderAndDetailAndCust" />
+          <EntitySet Name="CustomerInfoes" EntityType="StockModel.CustomerInfo" />
+          <EntitySet Name="PostCInfoes" EntityType="StockModel.PostCInfo" />
+          <AssociationSet Name="FK_CustomerInfo_CustLogin" Association="StockModel.FK_CustomerInfo_CustLogin">
+            <End Role="CustLogin" EntitySet="CustLogins" />
+            <End Role="CustomerInfo" EntitySet="CustomerInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderInfo_CustomerInfo" Association="StockModel.FK_OrderInfo_CustomerInfo">
+            <End Role="CustomerInfo" EntitySet="CustomerInfoes" />
+            <End Role="OrderInfo" EntitySet="OrderInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostInfo_PostCInfo" Association="StockModel.FK_PostInfo_PostCInfo">
+            <End Role="PostCInfo" EntitySet="PostCInfoes" />
+            <End Role="PostInfo" EntitySet="PostInfoes" />
+          </AssociationSet>
+          <EntitySet Name="VW_MyOrder" EntityType="StockModel.VW_MyOrder" />
+        </EntityContainer>
+        <EntityType Name="CustLogin">
+          <Key>
+            <PropertyRef Name="CustId" />
+          </Key>
+          <Property Name="CustId" Type="Int32" Nullable="false" />
+          <Property Name="CustLoginName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CustPassword" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="OrderInfoes" Relationship="StockModel.FK_OrderInfo_CustLogin" FromRole="CustLogin" ToRole="OrderInfo" />
+          <NavigationProperty Name="CustomerInfo" Relationship="StockModel.FK_CustomerInfo_CustLogin" FromRole="CustLogin" ToRole="CustomerInfo" />
+        </EntityType>
+        <EntityType Name="OrderInfo">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="CustId" Type="Int32" Nullable="false" />
+          <Property Name="OrderTotal" Type="Int32" />
+          <Property Name="OrderTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CustLogin" Relationship="StockModel.FK_OrderInfo_CustLogin" FromRole="OrderInfo" ToRole="CustLogin" />
+          <NavigationProperty Name="OrderDetails" Relationship="StockModel.FK_OrderDetail_OrderInfo" FromRole="OrderInfo" ToRole="OrderDetail" />
+          <NavigationProperty Name="CustomerInfo" Relationship="StockModel.FK_OrderInfo_CustomerInfo" FromRole="OrderInfo" ToRole="CustomerInfo" />
+        </EntityType>
+        <EntityType Name="VW_OrderAndDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="ProdId" Type="Int32" Nullable="false" />
+          <Property Name="ProdPrice" Type="Int32" Nullable="false" />
+          <Property Name="ProdQuantity" Type="Int32" Nullable="false" />
+          <Property Name="CustId" Type="Int32" Nullable="false" />
+          <Property Name="OrderTotal" Type="Int32" />
+          <Property Name="OrderTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_OrderInfo_CustLogin">
+          <End Type="StockModel.CustLogin" Role="CustLogin" Multiplicity="1" />
+          <End Type="StockModel.OrderInfo" Role="OrderInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustLogin">
+              <PropertyRef Name="CustId" />
+            </Principal>
+            <Dependent Role="OrderInfo">
+              <PropertyRef Name="CustId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_OrderInfo">
+          <End Type="StockModel.OrderInfo" Role="OrderInfo" Multiplicity="1" />
+          <End Type="StockModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderInfo">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_ProdInfo">
+          <End Type="StockModel.ProdInfo" Role="ProdInfo" Multiplicity="1" />
+          <End Type="StockModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProdInfo">
+              <PropertyRef Name="ProdId" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ProdId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_ProdInfo1">
+          <End Type="StockModel.ProdInfo" Role="ProdInfo" Multiplicity="1" />
+          <End Type="StockModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProdInfo">
+              <PropertyRef Name="ProdId" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ProdId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="VW_OrderAndDetailAndCust">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="PostName" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="PostCategory" Type="Int32" Nullable="false" />
+          <Property Name="ProdName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="OrderTotal" Type="Int32" />
+          <Property Name="OrderTime" Type="DateTime" Precision="3" />
+          <Property Name="ProdPrice" Type="Int32" Nullable="false" />
+          <Property Name="ProdQuantity" Type="Int32" Nullable="false" />
+          <Property Name="CustName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustRoad" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="CustCellPhone" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="CustId" Type="Int32" Nullable="false" />
+          <Property Name="CityName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CustomerInfo">
+          <Key>
+            <PropertyRef Name="CustId" />
+          </Key>
+          <Property Name="CustId" Type="Int32" Nullable="false" />
+          <Property Name="CustName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustRoad" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="CustCellPhone" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PostId" Type="Int32" />
+          <Property Name="PostCategory" Type="Int32" Nullable="false" />
+          <Property Name="CustLoginName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CustPassword" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CustLogin" Relationship="StockModel.FK_CustomerInfo_CustLogin" FromRole="CustomerInfo" ToRole="CustLogin" />
+          <NavigationProperty Name="OrderInfoes" Relationship="StockModel.FK_OrderInfo_CustomerInfo" FromRole="CustomerInfo" ToRole="OrderInfo" />
+        </EntityType>
+        <EntityType Name="PostCInfo">
+          <Key>
+            <PropertyRef Name="PostCategory" />
+          </Key>
+          <Property Name="PostCategory" Type="Int32" Nullable="false" />
+          <Property Name="CityName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PostInfoes" Relationship="StockModel.FK_PostInfo_PostCInfo" FromRole="PostCInfo" ToRole="PostInfo" />
+        </EntityType>
+        <Association Name="FK_CustomerInfo_CustLogin">
+          <End Type="StockModel.CustLogin" Role="CustLogin" Multiplicity="1" />
+          <End Type="StockModel.CustomerInfo" Role="CustomerInfo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CustLogin">
+              <PropertyRef Name="CustId" />
+            </Principal>
+            <Dependent Role="CustomerInfo">
+              <PropertyRef Name="CustId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderInfo_CustomerInfo">
+          <End Type="StockModel.CustomerInfo" Role="CustomerInfo" Multiplicity="1" />
+          <End Type="StockModel.OrderInfo" Role="OrderInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerInfo">
+              <PropertyRef Name="CustId" />
+            </Principal>
+            <Dependent Role="OrderInfo">
+              <PropertyRef Name="CustId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostInfo_PostCInfo">
+          <End Type="StockModel.PostCInfo" Role="PostCInfo" Multiplicity="1" />
+          <End Type="StockModel.PostInfo" Role="PostInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PostCInfo">
+              <PropertyRef Name="PostCategory" />
+            </Principal>
+            <Dependent Role="PostInfo">
+              <PropertyRef Name="PostCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="VW_MyOrder">
+          <Key>
+            <PropertyRef Name="OrderId" />
+            <PropertyRef Name="CustName" />
+            <PropertyRef Name="CustCellPhone" />
+            <PropertyRef Name="CustId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="CustName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustCellPhone" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="OrderTotal" Type="Int32" />
+          <Property Name="OrderTime" Type="DateTime" Precision="3" />
+          <Property Name="CustId" Type="Int32" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StockModelStoreContainer" CdmEntityContainer="StockEntities">
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="StockModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetail">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ProdId" ColumnName="ProdId" />
+                <ScalarProperty Name="ProdPrice" ColumnName="ProdPrice" />
+                <ScalarProperty Name="ProdQuantity" ColumnName="ProdQuantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostInfoes">
+            <EntityTypeMapping TypeName="StockModel.PostInfo">
+              <MappingFragment StoreEntitySet="PostInfo">
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="PostName" ColumnName="PostName" />
+                <ScalarProperty Name="PostCategory" ColumnName="PostCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProdInfoes">
+            <EntityTypeMapping TypeName="StockModel.ProdInfo">
+              <MappingFragment StoreEntitySet="ProdInfo">
+                <ScalarProperty Name="ProdContent" ColumnName="ProdContent" />
+                <ScalarProperty Name="ProdId" ColumnName="ProdId" />
+                <ScalarProperty Name="ProdName" ColumnName="ProdName" />
+                <ScalarProperty Name="ProdCount" ColumnName="ProdCount" />
+                <ScalarProperty Name="ProdCategory" ColumnName="ProdCategory" />
+                <ScalarProperty Name="ProdPrice" ColumnName="ProdPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustLogins">
+            <EntityTypeMapping TypeName="StockModel.CustLogin">
+              <MappingFragment StoreEntitySet="CustLogin">
+                <ScalarProperty Name="CustPassword" ColumnName="CustPassword" />
+                <ScalarProperty Name="CustLoginName" ColumnName="CustLoginName" />
+                <ScalarProperty Name="CustId" ColumnName="CustId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderInfoes">
+            <EntityTypeMapping TypeName="StockModel.OrderInfo">
+              <MappingFragment StoreEntitySet="OrderInfo">
+                <ScalarProperty Name="OrderTime" ColumnName="OrderTime" />
+                <ScalarProperty Name="OrderTotal" ColumnName="OrderTotal" />
+                <ScalarProperty Name="CustId" ColumnName="CustId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_OrderAndDetail">
+            <EntityTypeMapping TypeName="StockModel.VW_OrderAndDetail">
+              <MappingFragment StoreEntitySet="VW_OrderAndDetail">
+                <ScalarProperty Name="OrderTime" ColumnName="OrderTime" />
+                <ScalarProperty Name="OrderTotal" ColumnName="OrderTotal" />
+                <ScalarProperty Name="CustId" ColumnName="CustId" />
+                <ScalarProperty Name="ProdQuantity" ColumnName="ProdQuantity" />
+                <ScalarProperty Name="ProdPrice" ColumnName="ProdPrice" />
+                <ScalarProperty Name="ProdId" ColumnName="ProdId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_OrderAndDetailAndCust">
+            <EntityTypeMapping TypeName="StockModel.VW_OrderAndDetailAndCust">
+              <MappingFragment StoreEntitySet="VW_OrderAndDetailAndCust">
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CustId" ColumnName="CustId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="CustCellPhone" ColumnName="CustCellPhone" />
+                <ScalarProperty Name="CustRoad" ColumnName="CustRoad" />
+                <ScalarProperty Name="CustName" ColumnName="CustName" />
+                <ScalarProperty Name="ProdQuantity" ColumnName="ProdQuantity" />
+                <ScalarProperty Name="ProdPrice" ColumnName="ProdPrice" />
+                <ScalarProperty Name="OrderTime" ColumnName="OrderTime" />
+                <ScalarProperty Name="OrderTotal" ColumnName="OrderTotal" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ProdName" ColumnName="ProdName" />
+                <ScalarProperty Name="PostCategory" ColumnName="PostCategory" />
+                <ScalarProperty Name="PostName" ColumnName="PostName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerInfoes">
+            <EntityTypeMapping TypeName="StockModel.CustomerInfo">
+              <MappingFragment StoreEntitySet="CustomerInfo">
+                <ScalarProperty Name="CustPassword" ColumnName="CustPassword" />
+                <ScalarProperty Name="CustLoginName" ColumnName="CustLoginName" />
+                <ScalarProperty Name="PostCategory" ColumnName="PostCategory" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="CustCellPhone" ColumnName="CustCellPhone" />
+                <ScalarProperty Name="CustRoad" ColumnName="CustRoad" />
+                <ScalarProperty Name="CustName" ColumnName="CustName" />
+                <ScalarProperty Name="CustId" ColumnName="CustId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostCInfoes">
+            <EntityTypeMapping TypeName="StockModel.PostCInfo">
+              <MappingFragment StoreEntitySet="PostCInfo">
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="PostCategory" ColumnName="PostCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_MyOrder">
+            <EntityTypeMapping TypeName="StockModel.VW_MyOrder">
+              <MappingFragment StoreEntitySet="VW_MyOrder">
+                <ScalarProperty Name="CustId" ColumnName="CustId" />
+                <ScalarProperty Name="OrderTime" ColumnName="OrderTime" />
+                <ScalarProperty Name="OrderTotal" ColumnName="OrderTotal" />
+                <ScalarProperty Name="CustCellPhone" ColumnName="CustCellPhone" />
+                <ScalarProperty Name="CustName" ColumnName="CustName" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram DiagramId="049f34d7e5084dd888aa156e751aaf28" Name="Diagram1">
+        <EntityTypeShape EntityType="StockModel.OrderDetail" Width="1.5" PointX="0.875" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockModel.PostInfo" Width="1.5" PointX="1.125" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockModel.ProdInfo" Width="1.5" PointX="6.625" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockModel.CustLogin" Width="1.5" PointX="4.875" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockModel.OrderInfo" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="StockModel.VW_OrderAndDetail" Width="1.5" PointX="8.625" PointY="1.375" />
+        <AssociationConnector Association="StockModel.FK_OrderInfo_CustLogin" />
+        <AssociationConnector Association="StockModel.FK_OrderDetail_OrderInfo" />
+        <AssociationConnector Association="StockModel.FK_OrderDetail_ProdInfo" />
+        <AssociationConnector Association="StockModel.FK_OrderDetail_ProdInfo1" />
+        <EntityTypeShape EntityType="StockModel.VW_OrderAndDetailAndCust" Width="1.5" PointX="8.375" PointY="4.375" />
+        <EntityTypeShape EntityType="StockModel.CustomerInfo" Width="1.5" PointX="6.875" PointY="0.5" />
+        <EntityTypeShape EntityType="StockModel.PostCInfo" Width="1.5" PointX="3.875" PointY="5.375" />
+        <AssociationConnector Association="StockModel.FK_CustomerInfo_CustLogin" />
+        <AssociationConnector Association="StockModel.FK_OrderInfo_CustomerInfo" />
+        <AssociationConnector Association="StockModel.FK_PostInfo_PostCInfo" />
+        <EntityTypeShape EntityType="StockModel.VW_MyOrder" Width="1.5" PointX="3.375" PointY="8.75" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

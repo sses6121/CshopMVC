@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StockModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <Property Name="ProdId" Type="Int32" Nullable="false" />
+    <Property Name="ProdPrice" Type="Int32" Nullable="false" />
+    <Property Name="ProdQuantity" Type="Int32" Nullable="false" />
+    <Property Name="id" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PostCInfo">
+    <Key>
+      <PropertyRef Name="PostCategory" />
+    </Key>
+    <Property Name="PostCategory" Type="Int32" Nullable="false" />
+    <Property Name="CityName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PostInfo">
+    <Key>
+      <PropertyRef Name="PostId" />
+    </Key>
+    <Property Name="PostId" Type="Int32" Nullable="false" />
+    <Property Name="PostName" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+    <Property Name="PostCategory" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProdInfo">
+    <Key>
+      <PropertyRef Name="ProdId" />
+    </Key>
+    <Property Name="ProdId" Type="Int32" Nullable="false" />
+    <Property Name="ProdName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProdCount" Type="Int32" Nullable="false" />
+    <Property Name="ProdCategory" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProdPrice" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="StockEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+    <EntitySet Name="PostCInfoes" EntityType="Self.PostCInfo" />
+    <EntitySet Name="PostInfoes" EntityType="Self.PostInfo" />
+    <EntitySet Name="ProdInfoes" EntityType="Self.ProdInfo" />
+    <EntitySet Name="CustLogins" EntityType="StockModel.CustLogin" />
+    <EntitySet Name="OrderInfoes" EntityType="StockModel.OrderInfo" />
+    <EntitySet Name="CustomerInfoes" EntityType="StockModel.CustomerInfo" />
+    <EntitySet Name="ProductCommets" EntityType="StockModel.ProductCommet" />
+    <EntitySet Name="VW_OrderAndDetail" EntityType="StockModel.VW_OrderAndDetail" />
+  </EntityContainer>
+  <EntityType Name="CustLogin">
+    <Key>
+      <PropertyRef Name="CustId" />
+    </Key>
+    <Property Name="CustId" Type="Int32" Nullable="false" />
+    <Property Name="CustLoginName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="CustPassword" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="OrderInfo">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <Property Name="CustId" Type="Int32" Nullable="false" />
+    <Property Name="OrderTotal" Type="Int32" />
+    <Property Name="OrderTime" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="CustomerInfo">
+    <Key>
+      <PropertyRef Name="CustId" />
+    </Key>
+    <Property Name="CustId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CustRoad" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+    <Property Name="CustCellPhone" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="PostId" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="PostCategory" Type="Int32" Nullable="false" />
+    <Property Name="CustLoginName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="CustPassword" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ProductCommet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustId" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ProdId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VW_OrderAndDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <Property Name="ProdId" Type="Int32" Nullable="false" />
+    <Property Name="ProdPrice" Type="Int32" Nullable="false" />
+    <Property Name="ProdQuantity" Type="Int32" Nullable="false" />
+    <Property Name="CustId" Type="Int32" Nullable="false" />
+    <Property Name="OrderTotal" Type="Int32" />
+    <Property Name="OrderTime" Type="DateTime" Precision="3" />
+  </EntityType>
+</Schema>

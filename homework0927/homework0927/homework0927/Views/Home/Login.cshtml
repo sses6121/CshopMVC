@@ -1,0 +1,19 @@
+﻿@using homework0927.Models;
+@model  CustLogin
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>登入</h2>
+<form method="post" action="">
+    <div class="form-group">
+        <label for="login">帳號：</label><input type="text" id="login" name="CustLoginName" class="form-control" value="@Model.CustLoginName" /><br />
+    </div><div class="form-group">
+    <label for="password">密碼：</label><input type="password" id="password" name="CustPassword" class="form-control" value="@Model.CustPassword" /><br />
+</div>
+        <button type="submit" name="OKButton" class="btn btn-success">送出</button>
+        <a href="~/Home/Index" class="btn btn-danger">取消</a>
+    <label>@if (IsPost) { @Session["message"]}</label>
+</form>
+

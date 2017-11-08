@@ -1,0 +1,66 @@
+﻿@using homework0927.Models;
+
+@model List<homework0927.Models.VW_OrderAndDetail>
+
+@{
+    ViewBag.Title = "MyOrder";
+    Cust cust = new Cust();
+    cust.UserId = Convert.ToInt32( Session["CustId"]);
+}
+
+<h2>我的訂單</h2>
+@*<form>
+    <input type="text" hidden name="CustId" value="@Session["Custid"]" />
+</form>*@
+
+
+
+<div class="table-responsive">
+    <table class="table">
+
+        <tr>
+            <th>訂單單號</th>
+            <th>訂購金額</th>
+            <th>收貨人姓名</th>
+            <th>收貨人電話</th>
+            <th>收貨人住址</th>
+            <th>訂單明細</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model) {
+
+            <tr>
+                <td>
+                    @item.OrderId
+                </td>
+                <td>
+                    @*@item.ProdId*@
+                    @item.OrderTotal
+                    @cust.GetUrderProd(item.ProdId)
+                </td>
+                <td>
+                    @cust.GetUrderName(Convert.ToInt32(Session["CustId"]))
+                </td>
+                <td>
+                    @cust.GetUrderCellPhone(Convert.ToInt32(Session["CustId"]))
+                </td>
+                <td>
+                    @cust.GetUrderAddress(Convert.ToInt32(Session["CustId"]))
+                </td>
+                <td>
+                    <form>
+                        <input type="text" hidden name="OrderId" value="@item.OrderId" />
+                        <input type="text" hidden name="Custid" value='@Session["CustId"]' />
+                    </form>
+
+                    <button type="submit" class="btn btn-info" onclick="location.href = 'Details/@item.OrderId';">
+                            訂單明細
+                    </button>
+
+                    @*@Html.ActionLink("商品明細", "MyOrderDetail", new { id = item.OrderId }
+                        , new { class = "btn btn-default" })*@
+                </td>
+            </tr>
+        }
+    </table>
+    </div>
